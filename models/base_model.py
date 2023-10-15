@@ -11,12 +11,12 @@ class BaseModel:
     """BaseModel Class"""
 
     def __init__(self, *args, **kwargs):
-        self.id = str(uuid.uuid4())
+        d_format = "%Y-%m-%dT%H:%M:%S.%f"
+        self.id = str(uuid4())
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
 
         if len(kwargs):
-            d_format = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
                     self.__dict__[key] = datetime.strptime(value, d_format)
@@ -37,4 +37,5 @@ class BaseModel:
             return dup_dict
 
         def __str__(self):
-            return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+            class_name = self.__class__.__name__
+            return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
