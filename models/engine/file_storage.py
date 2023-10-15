@@ -6,9 +6,8 @@ from models.user import User
 
 
 class FileStorage:
-    """Serialization to a JSON file and
-        deserializing JSON file to instances
-    """
+    """Serialization and deserializing a JSON file"""
+
     __file_path = "file.json"
     __objects = {}
 
@@ -16,8 +15,7 @@ class FileStorage:
         return (FileStorage.__objects)
 
     def new(self, obj):
-        obj_n = obj.__class__.__name__
-        FileStorage.__objects["{}.{}".format(obj_n, obj.id)] = obj
+        FileStorage.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
 
     def save(self):
         dup_obj = FileStorage.__objects
@@ -30,7 +28,7 @@ class FileStorage:
         try:
             with open(FileStorage.__file_path, "r") as f:
                 obj_dict = json.load(f)
-                for obj in objects_dict.values():
+                for obj in obj_dict.values():
                     c_name = obj["__class__"]
                     del obj["__class__"]
                     self.new(eval(c_name)(**obj))
