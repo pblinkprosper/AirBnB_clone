@@ -17,8 +17,8 @@ class BaseModel:
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
 
-        d_format = "%Y-%m-%dT%H:%M:%S.%f"
         if len(kwargs):
+            d_format = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
                     self.__dict__[key] = datetime.strptime(value, d_format)
