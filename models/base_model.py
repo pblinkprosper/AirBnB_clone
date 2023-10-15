@@ -9,8 +9,6 @@ class BaseModel:
     """Defines all common attributes/methods for other classes."""
 
     def __init__(self, *args, **kwargs):
-        """Initialize the BaseModel class"""
-        # public instance attributes
         self.id = str(uuid.uuid4())
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
@@ -30,12 +28,12 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        dict_copy = self.__dict__.copy()
-        dict_copy["created_at"] = self.created_at.isoformat()
-        dict_copy["updated_at"] = self.updated_at.isoformat()
-        dict_copy["__class__"] = self.__class__.__name__
+        dup_dict = self.__dict__.copy()
+        dup_dict["created_at"] = self.created_at.isoformat()
+        dup_dict["updated_at"] = self.updated_at.isoformat()
+        dup_dict["__class__"] = self.__class__.__name__
 
-        return (dict_copy)
+        return (dup_dict)
 
     def __str__(self):
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
