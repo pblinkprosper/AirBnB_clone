@@ -3,8 +3,8 @@
 import cmd
 import re
 from shlex import split
-from models.base_model import BaseModel
 from models import storage
+from models.base_model import BaseModel
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
@@ -21,14 +21,14 @@ def parse(arg):
             return [i.strip(",") for i in split(arg)]
         else:
             lexer = split(arg[:brackets.span()[0]])
-            ret = [i.strip(",") for i in lexer]
-            ret.append(brackets.group())
+            retl = [i.strip(",") for i in lexer]
+            retl.append(brackets.group())
             return retl
     else:
         lexer = split(arg[:curly_braces.span()[0]])
-        ret = [i.strip(",") for i in lexer]
-        ret.append(curly_braces.group())
-        return ret
+        retl = [i.strip(",") for i in lexer]
+        retl.append(curly_braces.group())
+        return retl
 
 
 class HBNBCommand(cmd.Cmd):
